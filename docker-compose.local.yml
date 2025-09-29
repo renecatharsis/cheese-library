@@ -1,0 +1,44 @@
+services:
+  payload:
+    image: node:22-alpine
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/home/node/app
+    working_dir: /home/node/app/
+    command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install && pnpm dev"
+    depends_on:
+       - db
+    env_file:
+      - .env
+    networks:
+      app:
+
+  db:
+    restart: always
+    image: postgres:17.6-bookworm
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
+      POSTGRES_APP_USERNAME: ${POSTGRES_APP_USERNAME}
+      POSTGRES_APP_PASSWORD: ${POSTGRES_APP_PASSWORD}
+      POSTGRES_APP_DATABASE: ${POSTGRES_APP_DATABASE}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./config/postgresql-init.sh:/docker-entrypoint-initdb.d/postgresql-init.sh
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      app:
+        aliases:
+          - db
+
+volumes:
+  pgdata:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${VOLUME_PATH_DATABASE}
+
+networks:
+  app:
