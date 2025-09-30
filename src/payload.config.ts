@@ -2,7 +2,11 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { de } from '@payloadcms/translations/languages/de'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import {
+  FixedToolbarFeature,
+  HTMLConverterFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -11,6 +15,7 @@ import sharp from 'sharp'
 import { migrations } from './migrations'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Cheese } from '@/collections/Cheese'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -22,8 +27,16 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
-  editor: lexicalEditor(),
+  collections: [Users, Media, Cheese],
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures.filter(
+        (feature) => feature.key !== 'upload' && feature.key !== 'relationship',
+      ),
+      FixedToolbarFeature(),
+      HTMLConverterFeature({}),
+    ],
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
