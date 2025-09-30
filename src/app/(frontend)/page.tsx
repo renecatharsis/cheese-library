@@ -1,10 +1,19 @@
 import React from 'react'
-import './styles.css'
+import CheeseList from '@/app/(frontend)/components/CheeseList'
+import { getPayload, PaginatedDocs } from 'payload'
+import config from '@payload-config'
+import { Cheese } from '@/payload-types'
 
 export default async function HomePage() {
+  const payload = await getPayload({ config })
+  const cheeses: PaginatedDocs<Cheese> = await payload.find({
+    collection: 'cheese',
+    sort: '-rating',
+  })
+
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
-      <h1>Cheese Library</h1>
+    <div className="pt-12 pb-4">
+      <CheeseList cheeses={cheeses} />
     </div>
   )
 }

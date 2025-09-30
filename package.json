@@ -1,7 +1,7 @@
 {
   "name": "cheese-library",
   "version": "1.0.0",
-  "description": "A blank template to get started with Payload 3.0",
+  "description": "Single page app to look up cheese information",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -39,6 +39,7 @@
     "@eslint/eslintrc": "^3.3.1",
     "@next/eslint-plugin-next": "^15.5.4",
     "@playwright/test": "1.54.1",
+    "@tailwindcss/postcss": "^4.1.13",
     "@testing-library/react": "16.3.0",
     "@types/node": "^22.5.4",
     "@types/react": "19.1.8",
@@ -52,6 +53,7 @@
     "jsdom": "26.1.0",
     "playwright": "1.54.1",
     "playwright-core": "1.54.1",
+    "postcss": "^8.5.6",
     "prettier": "^3.4.2",
     "typescript": "5.7.3",
     "vite-tsconfig-paths": "5.1.4",
