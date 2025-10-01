@@ -31,7 +31,8 @@ export default buildConfig({
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures.filter(
-        (feature) => feature.key !== 'upload' && feature.key !== 'relationship',
+        (feature) =>
+          feature.key !== 'inlineCode' && feature.key !== 'add' && feature.key !== 'link',
       ),
       FixedToolbarFeature(),
       HTMLConverterFeature({}),

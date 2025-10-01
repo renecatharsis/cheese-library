@@ -1,68 +1,100 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CheeseCard from '@/app/(frontend)/components/CheeseCard'
 import { PaginatedDocs } from 'payload'
 import { Cheese } from '@/payload-types'
 
+type Filter = {
+  name: string | undefined
+  type: string | undefined
+  rating: number | undefined
+}
+
 export default function CheeseList({ cheeses }: { cheeses: PaginatedDocs<Cheese> }) {
+  const [filteredCheeses, setFilteredCheeses] = useState<Cheese[]>(cheeses.docs)
+  const [filters, setFilters] = useState<Filter>({
+    name: undefined,
+    type: undefined,
+    rating: undefined,
+  })
+
+  useEffect(() => {
+    let filtered = cheeses.docs
+
+    if (filters.type !== undefined && filters.type !== '') {
+      filtered = filtered.filter(function (cheese) {
+        return cheese.type === filters.type
+      })
+    }
+
+    if (filters.rating !== undefined && filters.rating !== 0) {
+      filtered = filtered.filter(function (cheese) {
+        return Number(cheese.rating) >= (filters.rating || 0)
+      })
+    }
+
+    if (filters.name !== undefined && filters.name !== '') {
+      filtered = filtered.filter(function (cheese) {
+        cheese.name.toLowerCase().includes((filters.name as string).toLowerCase())
+      })
+    }
+
+    setFilteredCheeses(filtered)
+  }, [filters, cheeses])
+
+  function filterByName(name: string) {
+    setFilters({ ...filters, name: name })
+  }
+
+  function filterByType(type: string) {
+    setFilters({ ...filters, type: type })
+  }
+
+  function filterByRating(rating: number) {
+    setFilters({ ...filters, rating: rating })
+  }
+
   return (
     <div className="pt-12 pb-4">
       <div className="flex flex-col items-center justify-center">
-        <div className="w-full mb-10 rounded-lg border border-stroke bg-gray-1 py-5 pl-8 pr-5 dark:border-dark-3 dark:bg-dark-2">
-          <div className="-mx-4 flex flex-wrap items-center justify-center">
-            <div className="mb-4 mr-8 inline-flex items-center sm:block md:mb-0 lg:mr-5 lg:inline-flex xl:mr-8">
-              <label htmlFor="" className="mr-4 text-base font-medium text-dark dark:text-white">
-                Category
-              </label>
-              <div className="relative">
-                <select className="w-full appearance-none rounded-[5px] border border-stroke bg-transparent py-[10px] pl-4 pr-8 font-medium text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD] dark:border-dark-3 dark:text-white">
-                  <option value="" className="dark:bg-dark-2">
-                    Jacket
-                  </option>
-                </select>
-                <span className="absolute right-4 top-1/2 mt-[-2px] h-[10px] w-[10px] -translate-y-1/2 rotate-45 border-b-2 border-r-2 border-body-color"></span>
-              </div>
-            </div>
-            <div className="mb-4 mr-8 inline-flex items-center sm:block md:mb-0 lg:mr-5 lg:inline-flex xl:mr-8">
-              <label htmlFor="" className="mr-4 text-base font-medium text-dark dark:text-white">
-                Size
-              </label>
-              <div className="relative">
-                <select className="w-full appearance-none rounded-[5px] border border-stroke bg-transparent py-[10px] pl-4 pr-8 font-medium text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD] dark:border-dark-3 dark:text-white">
-                  <option value="" className="dark:bg-dark-2">
-                    Small
-                  </option>
-                </select>
-                <span className="absolute right-4 top-1/2 mt-[-2px] h-[10px] w-[10px] -translate-y-1/2 rotate-45 border-b-2 border-r-2 border-body-color"></span>
-              </div>
-            </div>
-            <div className="mb-4 inline-flex items-center sm:block md:mb-0 lg:inline-flex">
-              <label htmlFor="" className="mr-4 text-base font-medium text-dark dark:text-white">
-                Color
-              </label>
-              <div className="relative">
-                <select className="w-full appearance-none rounded-[5px] border border-stroke bg-transparent py-[10px] pl-4 pr-8 font-medium text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD] dark:border-dark-3 dark:text-white">
-                  <option value="" className="dark:bg-dark-2">
-                    Blue
-                  </option>
-                </select>
-                <span className="absolute right-4 top-1/2 mt-[-2px] h-[10px] w-[10px] -translate-y-1/2 rotate-45 border-b-2 border-r-2 border-body-color"></span>
-              </div>
-            </div>
-          </div>
+        <div className="w-full mb-8 px-4 py-8 flex flex-col gap-4 border border-stone-300 rounded-xl">
+          <input
+            type="text"
+            placeholder="Nach Namen filtern..."
+            className="w-full rounded-md border border-stone-300 py-2 px-5 focus:border-primary active:border-primary"
+            onChange={(e) => filterByName(e.target.value)}
+          />
+          <select
+            className="w-full bg-transparent rounded-md border border-stone-300 py-2 px-5 focus:border-primary selected:border-primary active:border-primary"
+            onChange={(e) => filterByType(e.target.value)}
+          >
+            <option value="">Alle Sorten</option>
+            <option value="hard">Hartkäse</option>
+            <option value="soft">Weichkäse</option>
+            <option value="grated">Reibekäse</option>
+          </select>
+          <select
+            className="w-full bg-transparent rounded-md border border-stone-300 py-2 px-5 focus:border-primary active:border-primary"
+            onChange={(e) => filterByRating(Number(e.target.value))}
+          >
+            <option value="">Alle Bewertungen</option>
+            <option value="1">1 Stern oder mehr</option>
+            <option value="2">2 Sterne oder mehr</option>
+            <option value="3">3 Sterne oder mehr</option>
+            <option value="4">4 Sterne oder mehr</option>
+            <option value="5">5 Sterne</option>
+          </select>
         </div>
-
-        <section className="bg-gray-2 dark:bg-dark">
-          <div className="container mx-auto">
-            <div className="-mx-4 flex flex-wrap justify-center">
-              {cheeses.docs.map(function (cheese, index) {
-                return <CheeseCard cheese={cheese} key={index} />
-              })}
-            </div>
-          </div>
-        </section>
       </div>
+
+      <section>
+        <div className="flex flex-col lg:flex-row justify-center gap-8 lg:gap-2">
+          {filteredCheeses.map(function (cheese, index) {
+            return <CheeseCard cheese={cheese} key={index} />
+          })}
+        </div>
+      </section>
     </div>
   )
 }
