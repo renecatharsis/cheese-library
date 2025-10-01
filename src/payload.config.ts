@@ -38,6 +38,7 @@ export default buildConfig({
       HTMLConverterFeature({}),
     ],
   }),
+  serverURL: process.env.PAYLOAD_SERVER_URL || '',
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
