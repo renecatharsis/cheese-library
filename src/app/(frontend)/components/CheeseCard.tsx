@@ -12,11 +12,11 @@ export default function CheeseCard({ cheese }: { cheese: Cheese }) {
     <div className="w-full px-4 md:w-1/2 lg:w-1/3 rounded-2xl bg-stone-300">
       <div className="mb-10 h-full rounded-lg p-4 pb-6 shadow-1 duration-300 hover:shadow-3 dark:bg-dark-2 dark:shadow-card">
         <div className="mb-6 w-full overflow-hidden rounded-md">
-          <div className="carousel w-full">
+          <div className="w-full">
             {cheese.images?.map(function (image, index) {
               return (
                 <div
-                  className={`carousel-item relative w-full transition-transform duration-700 ease-in-out ${slide === index ? 'active' : 'hidden'}`}
+                  className={`relative w-full ${slide === index ? 'active' : 'hidden'}`}
                   key={index}
                 >
                   <img
@@ -25,11 +25,15 @@ export default function CheeseCard({ cheese }: { cheese: Cheese }) {
                     className="h-[250px] w-full object-cover"
                   />
                   {cheese.images && cheese.images.length > 1 && (
-                    <div className="absolute left-2 right-2 lg:left-5 lg:right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+                    <div className="absolute left-2 right-2 lg:left-5 lg:right-5 top-1/2 flex justify-between">
                       <button
                         className="text-2xl lg:text-xl bg-white px-4 py-2 lg:px-2 lg:py-0 rounded-full cursor-pointer"
                         onClick={() => {
-                          setSlide((slide) => (slide - 1 + 3) % 3)
+                          setSlide(
+                            (slide) =>
+                              (slide - 1 + (cheese.images?.length ?? 1)) %
+                              (cheese.images?.length ?? 1),
+                          )
                         }}
                       >
                         ❮
@@ -37,7 +41,7 @@ export default function CheeseCard({ cheese }: { cheese: Cheese }) {
                       <button
                         className="text-2xl lg:text-xl bg-white px-4 py-2 lg:px-2 lg:py-0 rounded-full cursor-pointer"
                         onClick={() => {
-                          setSlide((slide) => (slide + 1) % 3)
+                          setSlide((slide) => (slide + 1) % (cheese.images?.length ?? 1))
                         }}
                       >
                         ❯

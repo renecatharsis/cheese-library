@@ -1,3 +1,5 @@
+export const revalidate = 300 // cache for 5 minutes
+
 import React from 'react'
 import CheeseList from '@/app/(frontend)/components/CheeseList'
 import { getPayload, PaginatedDocs } from 'payload'
