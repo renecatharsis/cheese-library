@@ -56,7 +56,7 @@ export default function CheeseList({ cheeses }: { cheeses: PaginatedDocs<Cheese>
   }
 
   return (
-    <div className="pt-12 pb-4">
+    <div>
       <div className="flex flex-col items-center justify-center">
         <div className="w-full mb-8 px-4 py-8 flex flex-col gap-4 border border-stone-300 rounded-xl">
           <input
@@ -89,7 +89,7 @@ export default function CheeseList({ cheeses }: { cheeses: PaginatedDocs<Cheese>
       </div>
 
       <section>
-        <div className="flex flex-col lg:flex-row justify-center gap-8 lg:gap-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {filteredCheeses.map(function (cheese, index) {
             return <CheeseCard cheese={cheese} key={index} />
           })}
