@@ -6,7 +6,8 @@ Because I like cheese :-)
 * `docker compose up -d --build`
 
 ## production
-tbd
+* `cp .env.example .env` (no database provided as part of the stack)
+* `docker compose up -d --build`
 
 ## Migrations
 * To create a new migration, run:

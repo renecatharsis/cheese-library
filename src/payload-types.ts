@@ -200,9 +200,15 @@ export interface Cheese {
     };
     [k: string]: unknown;
   } | null;
-  firstPurchaseDate: string;
-  images?: (string | Media)[] | null;
   description_html?: string | null;
+  images?: (string | Media)[] | null;
+  purchases?:
+    | {
+        dateOfPurchase: string;
+        priceByKilo: number;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -340,9 +346,15 @@ export interface CheeseSelect<T extends boolean = true> {
   type?: T;
   rating?: T;
   description?: T;
-  firstPurchaseDate?: T;
-  images?: T;
   description_html?: T;
+  images?: T;
+  purchases?:
+    | T
+    | {
+        dateOfPurchase?: T;
+        priceByKilo?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

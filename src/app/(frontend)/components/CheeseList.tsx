@@ -35,8 +35,9 @@ export default function CheeseList({ cheeses }: { cheeses: PaginatedDocs<Cheese>
     }
 
     if (filters.name !== undefined && filters.name !== '') {
+      const filterName = filters.name.toLowerCase()
       filtered = filtered.filter(function (cheese) {
-        cheese.name.toLowerCase().includes((filters.name as string).toLowerCase())
+        return cheese.name.toLowerCase().includes(filterName)
       })
     }
 

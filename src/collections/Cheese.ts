@@ -69,11 +69,10 @@ export const Cheese: CollectionConfig = {
       type: 'richText',
       required: false,
     },
-    {
-      name: 'firstPurchaseDate',
-      type: 'date',
-      required: true,
-    },
+    lexicalHTMLField({
+      htmlFieldName: 'description_html',
+      lexicalFieldName: 'description',
+    }),
     {
       name: 'images',
       type: 'relationship',
@@ -81,9 +80,22 @@ export const Cheese: CollectionConfig = {
       hasMany: true,
       required: false,
     },
-    lexicalHTMLField({
-      htmlFieldName: 'description_html',
-      lexicalFieldName: 'description',
-    }),
+    {
+      name: 'purchases',
+      type: 'array',
+      minRows: 1,
+      fields: [
+        {
+          name: 'dateOfPurchase',
+          type: 'date',
+          required: true,
+        },
+        {
+          name: 'priceByKilo',
+          type: 'number',
+          required: true,
+        },
+      ],
+    },
   ],
 }
