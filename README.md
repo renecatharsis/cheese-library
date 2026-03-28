@@ -4,6 +4,9 @@ Because I like cheese :-)
 ## development
 * `cp .env.example .env`
 * `docker compose up -d --build`
+* `nvm use`
+* `pnpm install`
+* `pnpm run dev`
 
 ## production
 * `cp .env.example .env` (no database provided as part of the stack)
