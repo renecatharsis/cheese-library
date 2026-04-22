@@ -14,6 +14,6 @@ Because I like cheese :-)
 
 ## Migrations
 * To create a new migration, run:
-    * `npm run payload migrate:create`
+    * `pnpm run payload migrate:create`
 * To run migrations, run:
-    * `npm run payload migrate`
+    * `pnpm run payload migrate`
