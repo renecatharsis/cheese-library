@@ -11,6 +11,7 @@ export default async function HomePage() {
   const cheeses: PaginatedDocs<Cheese> = await payload.find({
     collection: 'cheese',
     sort: '-rating',
+    pagination: false,
   })
 
   return (
