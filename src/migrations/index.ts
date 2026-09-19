@@ -1,9 +1,10 @@
-import * as migration_20250929_195037 from './20250929_195037'
-import * as migration_20250929_204944 from './20250929_204944'
-import * as migration_20250929_205531 from './20250929_205531'
-import * as migration_20251003_141044 from './20251003_141044'
-import * as migration_20251007_184827 from './20251007_184827'
-import * as migration_20251120_204901 from './20251120_204901'
+import * as migration_20250929_195037 from './20250929_195037';
+import * as migration_20250929_204944 from './20250929_204944';
+import * as migration_20250929_205531 from './20250929_205531';
+import * as migration_20251003_141044 from './20251003_141044';
+import * as migration_20251007_184827 from './20251007_184827';
+import * as migration_20251120_204901 from './20251120_204901';
+import * as migration_20260919_151609_add_reset_password_requested_at from './20260919_151609_add_reset_password_requested_at';
 
 export const migrations = [
   {
@@ -36,4 +37,9 @@ export const migrations = [
     down: migration_20251120_204901.down,
     name: '20251120_204901',
   },
-]
+  {
+    up: migration_20260919_151609_add_reset_password_requested_at.up,
+    down: migration_20260919_151609_add_reset_password_requested_at.down,
+    name: '20260919_151609_add_reset_password_requested_at'
+  },
+];
