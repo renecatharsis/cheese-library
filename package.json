@@ -31,7 +31,7 @@
     "payload": "3.90.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "sharp": "0.35.4",
+    "sharp": "0.35.5",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
@@ -61,7 +61,7 @@
     "vitest": "^4.1.11"
   },
   "engines": {
-    "node": ">=24.13.1 <25.0.0",
+    "node": ">=24.22.1 <25.0.0",
     "pnpm": "^10"
   },
   "pnpm": {
